@@ -1,10 +1,99 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Global Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9fafb;
 }
 
-.read-the-docs {
-  color: #888;
+/* Navbar Styles */
+nav {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+nav ul li {
+  color: #4a5568;
+  transition: color 0.2s ease;
+}
+
+nav ul li:hover {
+  color: #1a1a1a;
+}
+
+/* Welcome Banner Styles */
+.bg-white {
+  background-color: #ffffff;
+}
+
+.border-b {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.text-blue-600 {
+  color: #3b82f6;
+}
+
+/* Course Card Styles */
+.bg-white {
+  background-color: #ffffff;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.hover\:shadow-md:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.transition-shadow {
+  transition: box-shadow 0.2s ease;
+}
+
+/* Progress Bar Styles */
+.bg-gray-200 {
+  background-color: #e5e7eb;
+}
+
+.h-2 {
+  height: 0.5rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #ffffff;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer ul li {
+  color: #4a5568;
+  transition: color 0.2s ease;
+}
+
+footer ul li:hover {
+  color: #1a1a1a;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  nav ul {
+    display: none;
+  }
+}
