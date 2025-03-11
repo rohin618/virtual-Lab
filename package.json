@@ -14,11 +14,8 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.6",
-<<<<<<< HEAD
     "bootstrap": "^5.3.3",
-=======
     "lucide-react": "^0.479.0",
->>>>>>> 37fc568 (required frontend design)
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0"
