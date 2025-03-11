@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import HomePage from './pages/homepage'
-import Login from './components/login/Login'
-import 'bootstrap/dist/css/bootstrap.min.css';
-=======
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import HomePage from './pages/homepage/index';
 import SecuredComputingCourse from './pages/course';
@@ -17,23 +7,11 @@ import SignIn from './pages/signin'; // Ensure this is a default export
 import Explore from './pages/explore'; // Ensure this is a default export
 
 import './App.css';
->>>>>>> 37fc568 (required frontend design)
 
 
 
 function App() {
   return (
-<<<<<<< HEAD
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<HomePage/>}/>
-          <Route path='/login' element={<Login/>}/>
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
-=======
     <BrowserRouter>
       <Routes>
         {/* Home Page Route */}
@@ -54,7 +32,6 @@ function App() {
       
     </BrowserRouter>
   );
->>>>>>> 37fc568 (required frontend design)
 }
 
 export default App;
