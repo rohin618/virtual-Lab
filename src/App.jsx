@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import HomePage from './pages/homepage/index';
 import SecuredComputingCourse from './pages/course';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 //import HomePage from './pages/homepage'; // Ensure this is a default export
 import SignIn from './pages/signin'; // Ensure this is a default export
