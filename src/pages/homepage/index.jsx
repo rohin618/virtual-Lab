@@ -297,8 +297,7 @@ const HomePage = () => {
         position: 'relative',
       }}
     >
-      {/* Background effects */}
-      {darkMode && <ParticleBackground />}
+
       <div className="gradient-sphere gradient-sphere-1"></div>
       <div className="gradient-sphere gradient-sphere-2"></div>
       <div className="gradient-sphere gradient-sphere-3"></div>
