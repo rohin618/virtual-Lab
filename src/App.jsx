@@ -26,13 +26,6 @@ function App() {
         <Header />
         <Routes>
 
-          {/* <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/explore" element={<Explore />} />
-
-          <Route path="/course" element={<SecuredComputingCourse />} />
-          <Route path="/login" element={<Login />} /> */}
-
           {routeConfig.map(({ path, component: Component, protected: isProtected, role }, index) => (
             <Route
               key={index}
