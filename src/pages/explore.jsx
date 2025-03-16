@@ -8,7 +8,7 @@ const LeetCodeStylePage = () => {
   return (
     <div className="page-container">
       {/* Navigation Bar */}
-      <nav className="navbar">
+      {/* <nav className="navbar">
         <div className="navbar-left">
           <div className="navbar-brand">VIRTUAL LAB</div>
           <div className="navbar-nav">
@@ -27,7 +27,7 @@ const LeetCodeStylePage = () => {
             <i className="fas fa-user"></i>
           </div>
         </div>
-      </nav>
+      </nav> */}
 
       {/* Main Content */}
       <main className="main-content">
@@ -115,48 +115,7 @@ const LeetCodeStylePage = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-grid">
-            <div>
-              <h3 className="footer-title">CodeCamp</h3>
-              <p className="footer-text">
-                Build skills, solve challenges, and become a better developer.
-              </p>
-            </div>
-            <div>
-              <h4 className="footer-heading">Learn</h4>
-              <ul className="footer-list">
-                <li><a href="#" className="footer-link">Problems</a></li>
-                <li><a href="#" className="footer-link">Courses</a></li>
-                <li><a href="#" className="footer-link">Interview Prep</a></li>
-                <li><a href="#" className="footer-link">Contests</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="footer-heading">Community</h4>
-              <ul className="footer-list">
-                <li><a href="#" className="footer-link">Discuss</a></li>
-                <li><a href="#" className="footer-link">Blog</a></li>
-                <li><a href="#" className="footer-link">Mentors</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="footer-heading">Support</h4>
-              <ul className="footer-list">
-                <li><a href="#" className="footer-link">FAQ</a></li>
-                <li><a href="#" className="footer-link">Contact Us</a></li>
-                <li><a href="#" className="footer-link">Privacy Policy</a></li>
-                <li><a href="#" className="footer-link">Terms of Service</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-copyright">
-            © 2025 CodeCamp. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      
     </div>
   );
 };

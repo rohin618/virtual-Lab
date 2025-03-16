@@ -4,36 +4,60 @@ import SecuredComputingCourse from './pages/course';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-//import HomePage from './pages/homepage'; // Ensure this is a default export
-import SignIn from './pages/signin'; // Ensure this is a default export
 import Explore from './pages/explore'; // Ensure this is a default export
 
 import './App.css';
 import Login from './components/login/Login';
+import { routeConfig } from './RouteConfig';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import { ToastContainer } from 'react-toastify';
+import SignUp from './components/login/SignUp';
+import { AuthProvider } from './context/AuthContext';
+import RouteProtected from './context/RouteProtected';
+import ErrorPage from './components/errorPage/ErrorPage';
 
 
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Home Page Route */}
-        <Route path="/" element={<HomePage />} />
+      <AuthProvider>
+        <Header />
+        <Routes>
 
-        {/* Sign In Page Route */}
-        <Route path="/signin" element={<SignIn />} />
+          {/* <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/explore" element={<Explore />} />
 
-        {/* Explore Page Route */}
-        <Route path="/explore" element={<Explore />} />
-        
-        <Route path="/course" element={<SecuredComputingCourse />} />
-        <Route path="/login" element={<Login />} />
+          <Route path="/course" element={<SecuredComputingCourse />} />
+          <Route path="/login" element={<Login />} /> */}
 
-       
-      </Routes>
+          {routeConfig.map(({ path, component: Component, protected: isProtected, role }, index) => (
+            <Route
+              key={index}
+              path={path}
+              element={
+                isProtected ? (
+                  <RouteProtected role={role}>
+                    <Component />
+                  </RouteProtected>
+                ) : (
+                  <Component />
+                )
+              }
+            />
+          ))}
 
-      {/* Add Enroll Button (Optional: Place it where needed in the UI) */}
-      
+          <Route path='*' element={<ErrorPage/>}/>
+
+
+        </Routes>
+        <Footer />
+        <ToastContainer />
+      </AuthProvider>
+
+
     </BrowserRouter>
   );
 }
