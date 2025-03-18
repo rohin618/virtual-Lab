@@ -93,7 +93,7 @@ const Header = () => {
                 },
               }}
             >
-              LeetCode
+              NeetCode
             </Typography>
 
             {/* Desktop menu */}

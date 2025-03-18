@@ -1,0 +1,165 @@
+.course-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px #0a0e17;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    max-width: 400px;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  }
+  
+  .course-header {
+    /* background: #0a0e17; */
+    padding: 10px 20px;
+    color: #0a0e17;
+  }
+  
+  .course-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .course-body {
+    padding: 20px;
+  }
+  
+  .course-description {
+    color: #3C4852;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .card-meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    color: #3C4852;
+  }
+  
+  .meta-text {
+    margin-left: 5px;
+    font-weight: 500;
+  }
+  
+  .meta-separator {
+    margin: 0 8px;
+  }
+  
+  .card-ratings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .stars {
+    color: #ffc107;
+  }
+  
+  .rating-value {
+    color: #3C4852;
+    margin-left: 5px;
+  }
+  
+  .students-count {
+    font-weight: 500;
+    color: #3C4852;
+  }
+  
+  .students-count-value {
+    font-weight: 700;
+    color: #3C4852;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .difficulty {
+    font-weight: 500;
+    color: #3C4852;
+  }
+  
+  .difficulty-intermediate {
+    background-color: #17a2b8;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .enroll-button {
+    background: #0a0e17;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .enroll-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .course-card {
+      margin: 15px;
+    }
+    
+    .course-header h1 {
+      font-size: 24px;
+    }
+    
+    .card-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .enroll-button {
+      width: 100%;
+    }
+  }
+
+  .course_outer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust as needed for spacing */
+  }
+  
+  .course_outer .card {
+    flex: 1 1 30%; /* 3 cards per row on desktop */
+  }
+  
+  @media (max-width: 1024px) {
+    .course_outer .card {
+      flex: 1 1 48%; /* 2 cards per row on tablets */
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .course_outer .card {
+      flex: 1 1 100%; /* 1 card per row on mobile */
+    }
+  }
+  
+
+  .course_sec{
+    padding: 80px 0px;
+  }
+
+  .course-card hr{
+    margin: 0px;
+  }
