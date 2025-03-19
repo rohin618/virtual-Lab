@@ -43,10 +43,6 @@ function App() {
           ))}
 
           <Route path='*' element={<ErrorPage/>}/>
-          <Route path='/explore' element={<ExplorePage/>}/>
-          <Route path='/problemSets' element={<Course/>}/>
-          <Route path='/problem' element={<ProblemDetail/>}/>
-          <Route path='/courseDescription' element={<CourseDescription/>}/>
 
 
         </Routes>

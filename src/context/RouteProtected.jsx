@@ -9,7 +9,7 @@ function RouteProtected({children,role}) {
     
 
     if(Auth == null)return <Navigate to={'/login'}/>;
-    else if(Auth == role)  return children;
+    else if(Auth == localStorage.getItem('Auth_token'))  return children;
     else navigate(-1);
     
     
