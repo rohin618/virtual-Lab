@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -7,13 +7,9 @@ import { routeConfig } from './RouteConfig';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import { ToastContainer } from 'react-toastify';
-import { AuthProvider } from './context/AuthContext';
 import RouteProtected from './context/RouteProtected';
 import ErrorPage from './components/errorPage/ErrorPage';
-import ExplorePage from './pages/explorepage/ExplorePage';
-import Course from './pages/coursepage/Course';
-import ProblemDetail from './pages/problemDetailPage/ProblemDetail';
-import CourseDescription from './pages/coursedescription/CourseDescription';
+
 
 
 
@@ -21,7 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       
-      <AuthProvider>
+     
         <Header />
         <div className='container'>
         <Routes>
@@ -49,7 +45,6 @@ function App() {
         </div>
         <Footer />
         <ToastContainer />
-      </AuthProvider>
 
      
 
