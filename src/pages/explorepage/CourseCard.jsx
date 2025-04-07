@@ -1,18 +1,18 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const CourseCard = () => {
+const CourseCard = ({data}) => {
   const navigate = useNavigate()
 
   return (
     <div className="course-card card shadow-sm mb-4" style={{ width: '18rem' }}>
       <div className="course-header card-body">
-        <h5 className="card-title">Data Structures and Algorithms</h5>
+        <h5 className="card-title">{data.courseName}</h5>
       </div>
       <hr />
       <div className="course-body">
         <p className="course-description">
-          Master the essential data structures and algorithms, including arrays, linked lists, stacks, queues, trees, sorting, searching, and more.
+         {data.courseDescription}
         </p>
 
         <div className="card-meta d-flex justify-content-between align-items-center">
@@ -21,7 +21,7 @@ const CourseCard = () => {
             <span className="meta-text">20 hours</span>
             <span className="meta-separator mx-2">•</span>
             <i className="fas fa-book me-2"></i>
-            <span className="meta-text">15 modules</span>
+            <span className="meta-text">{data.courseNumbers} modules</span>
           </div>
         </div>
 
@@ -41,13 +41,13 @@ const CourseCard = () => {
 
         <div className="card-footer d-flex justify-content-between align-items-center">
           <div className="difficulty">
-            Difficulty: <span className="difficulty-level badge bg-warning text-dark">Intermediate</span>
+            Difficulty: <span className="difficulty-level badge bg-warning text-dark">{data.difficulties}</span>
           </div>
-          <Link to={'/courseDescription'}>
+          <Link to={`/courseDescription/${data.id}`}>
             <button
               className="enroll-button btn btn-primary"
               onClick={() => {
-                navigate('/courseDescription')
+                navigate(`/courseDescription/${data.id}`)
               }}
             >
               Enroll Now

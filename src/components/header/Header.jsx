@@ -195,32 +195,36 @@ const Header = () => {
                 </Menu>
               </Box>
               
+              {localStorage.getItem('role') === 'ADMIN' && 
               <Typography 
-                sx={{ 
-                  fontWeight: 500, 
-                  fontSize: '0.9rem', 
-                  cursor: 'pointer',
-                  color: darkMode ? '#fff' : '#2d3748',
-                  position: 'relative',
-                  '&:hover': {
-                    '&:after': {
-                      width: '100%',
-                    }
-                  },
+              sx={{ 
+                fontWeight: 500, 
+                fontSize: '0.9rem', 
+                cursor: 'pointer',
+                color: darkMode ? '#fff' : '#2d3748',
+                position: 'relative',
+                '&:hover': {
                   '&:after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: '-3px',
-                    left: 0,
-                    width: 0,
-                    height: '2px',
-                    backgroundColor: '#0a84ff',
-                    transition: 'width 0.3s ease'
+                    width: '100%',
                   }
-                }}
-              >
-                Developer
-              </Typography>
+                },
+                '&:after': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: '-3px',
+                  left: 0,
+                  width: 0,
+                  height: '2px',
+                  backgroundColor: '#0a84ff',
+                  transition: 'width 0.3s ease'
+                }
+              }}
+            >
+              <Link to={'/coursePageAdmin'} style={{textDecoration:'none',color:'#fff'}}>
+                Admin Dashboard
+              </Link>
+            </Typography>
+              }
               
               <IconButton
                 onClick={toggleDarkMode}

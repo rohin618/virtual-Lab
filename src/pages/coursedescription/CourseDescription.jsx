@@ -1,11 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './courseDescription.css'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import apiClient from '../../components/api/apiClients';
+import { apiRouters } from '../../components/api/apiRouters';
 
 const CourseDescription = () => {
     const courseTitle = "Mastering Data Structures and Algorithms";
     const courseDescription = "This course will teach you the core concepts of data structures and algorithms, helping you solve complex problems in computer science, including Arrays, Linked Lists, Trees, Graphs, and more.";
-    
+    const [problemTopic,setProblemTopic] = useState([]);
+    const [problemTopicOvr,setProblemTopicOvt] = useState([]);
+
+    const {slug} = useParams();
+
+    useEffect(()=>{
+        fetchData();
+        fetchProblemOverview();
+    },[])
+    const fetchData = async ()=>{
+        try{
+            const res = await apiClient.get(apiRouters.getProblemTopicsByCourseId(slug));
+            if(res.data){
+                setProblemTopic(res.data);
+                fetchProblemOverview(res.data.id);
+            }
+
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    const fetchProblemOverview = async (id)=>{
+        try{
+            const res = await apiClient.get(apiRouters.getTopicOverviewBySlug(id));
+            if(res.data){
+                setProblemTopicOvt(res.data);
+            }
+        }catch(e){
+            console.log(e);
+        }
+    }
     const topics = [
         { name: "Introduction to Arrays", description: "Learn about arrays, one of the most fundamental data structures.", number: 1 },
         { name: "Linked Lists", description: "Understand linked lists and their variations like singly and doubly linked lists.", number: 2 },
@@ -20,10 +53,10 @@ const CourseDescription = () => {
     return (
         <div className="container mt-5">
             <div className="course-header">
-                <h1>{courseTitle}</h1>
-                <p>{courseDescription}</p>
+                <h1>{problemTopic.courseTitle}</h1>
+                <p>{problemTopic.courseDescription}</p>
                 <div className='text-center py-2'>
-                    <Link to={'/problemSets'}>
+                    <Link to={`/problemSets/${problemTopic.id}`}>
                         <button className='btn btn-primary'>
                             Enroll to Problems
                         </button>
@@ -31,14 +64,14 @@ const CourseDescription = () => {
                 </div>
             </div>
             <div className="topics-list">
-                {topics.map((topic, index) => (
+                {problemTopicOvr.map((topic, index) => (
                     <div className="row topic-item" key={index}>
                         <div className="col-md-8">
-                            <h5>{topic.name}</h5>
-                            <p>{topic.description}</p>
+                            <h5>{topic.problemOverviewTitle}</h5>
+                            <p>{topic.problemOverviewDes}</p>
                         </div>
                         <div className="col-md-4 text-end">
-                            <span className="topic-number">{topic.number}</span>
+                            <span className="topic-number">{index+1}</span>
                         </div>
                     </div>
                 ))}

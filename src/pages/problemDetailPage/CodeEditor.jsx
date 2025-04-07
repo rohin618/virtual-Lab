@@ -1,42 +1,66 @@
-// src/CodeEditor.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { apiRouters } from "../../components/api/apiRouters";
+import apiClient from "../../components/api/apiClients";
 
-const CodeEditor = () => {
-  const [code, setCode] = useState("// Write your code here\n");
+const CodeEditor = ({ testCases = [] }) => {
+  const [code, setCode] = useState();
+  const [outputResults, setOutputResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // Basic syntax highlighting function using simple regex
-  const syntaxHighlight = (code) => {
-    const keywords = /\b(function|return|const|let|var|if|else|for|while|class|new|this|try|catch)\b/g;
-    const strings = /(['"]).*?\1/g;
-    const comments = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g;
-
-    return code
-      .replace(comments, "<span class='comment'>$&</span>")
-      .replace(keywords, "<span class='keyword'>$&</span>")
-      .replace(strings, "<span class='string'>$&</span>");
-  };
-
-  // Handle the changes in the textarea
   const handleChange = (event) => {
     setCode(event.target.value);
   };
 
-  // Function to add line numbers in the display area
-  const addLineNumbers = (code) => {
-    return code.split("\n").map((line, index) => {
-      return (
-        <div key={index} className="line">
-          <span className="line-number">{index + 1}</span>
-          <span className="line-code">{line}</span>
-        </div>
-      );
-    });
+
+  const runCode = async () => {
+    setLoading(true);
+    const results = [];
+
+    for (let i = 0; i < testCases.length; i++) {
+      const test = testCases[i];
+      console.log(test)
+
+      try {
+        const res = await apiClient.post(apiRouters.codeExecute, {
+          script: code,
+          stdin: test.input,
+          language: "python3",
+          versionIndex: "3"
+        });
+
+        console.log("Backend Response:", res.data); 
+
+        const output = res.data.output?.trim?.() || "";
+        const expected = test.expected?.trim?.() || "";
+        const passed = output === expected;
+
+        results.push({
+          input: test.input,
+          expected: test.expected,
+          output,
+          passed,
+        });
+      } catch (err) {
+        console.error("Execution Error:", err?.response?.data || err.message);
+
+        results.push({
+          input: test.input,
+          expected: test.expected,
+          output: err?.response?.data || "Error running code",
+          passed: false,
+        });
+      }
+    }
+
+    setOutputResults(results);
+    setLoading(false);
   };
 
   return (
-    <div className="code-editor">
+    <div>
+      <h4>Code Editor</h4>
       <textarea
-        className="editor"
         value={code}
         onChange={handleChange}
         spellCheck="false"
@@ -50,16 +74,24 @@ const CodeEditor = () => {
           border: "1px solid #ccc",
           borderRadius: "5px",
           padding: "10px",
-          outline: "none",
-          overflowY: "auto",
-          whiteSpace: "pre-wrap",
-          wordWrap: "break-word",
         }}
       />
-      <div
-        className="highlighted-code"
-        dangerouslySetInnerHTML={{ __html: syntaxHighlight(code) }}
-      />
+
+      <button onClick={runCode} className="btn btn-success mt-2">
+        {loading ? "Running..." : "Run Code"}
+      </button>
+
+      <div className="mt-4">
+        {outputResults.map((res, index) => (
+          <div key={index} className={`alert ${res.passed ? 'alert-success' : 'alert-danger'}`}>
+            <strong>Test Case {index + 1}:</strong><br />
+            <strong>Input:</strong> <pre>{res.input}</pre>
+            <strong>Expected:</strong> <pre>{res.expected}</pre>
+            <strong>Your Output:</strong> <pre>{res.output}</pre>
+            <strong>Status:</strong> {res.passed ? "Passed ✅" : "Failed ❌"}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

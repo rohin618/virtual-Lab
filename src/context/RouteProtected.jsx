@@ -5,12 +5,10 @@ import { useAuthContext } from './AuthContext';
 function RouteProtected({children,role}) {
     const {Auth,Role} = useAuthContext();
     const navigate = useNavigate();
-    console.log(Auth)
-    console.log(Role)
 
     if(Auth == null)return <Navigate to={'/login'}/>;
-    else if(Auth == localStorage.getItem('Auth_token') && Role == 'ADMIN') return children;
-    else if(Auth == localStorage.getItem('Auth_token') && Role == localStorage.getItem('role'))  return children;
+    else if(Role == 'USER' && localStorage.getItem('role') == 'USER' &&  role == 'USER')return children; 
+    else if(Role == 'ADMIN' && localStorage.getItem('role') == 'ADMIN' && role == 'USER' || role == 'ADMIN') return children;
     else navigate(-1);
     
     

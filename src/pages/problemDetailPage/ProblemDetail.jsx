@@ -1,38 +1,38 @@
-// import React from 'react'
-// import CodeEditor from './CodeEditor'
-// import './problemdetial.css'
-
-
-// const ProblemDetail = () => {
-//   return (
-//     <div>
-//      <section className='problemDetail_section'>
-//      <div className='problemDetail_inner'>
-//         <div className='pd_leftSide'>
-//             {/* left side */}
-//             <h1>rohini kumar</h1>
-//         </div>
-//         <div className='pd_rightside'>
-//             <div>
-//                 <CodeEditor/>
-//             </div>
-//         </div>
-//       </div>
-//      </section>
-//     </div>
-//   )
-// }
-
-// export default ProblemDetail
 
 
 
-
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CodeEditor from './CodeEditor'
 import './problemdetial.css'
+import apiClient from '../../components/api/apiClients'
+import { apiRouters } from '../../components/api/apiRouters'
+import { useParams } from 'react-router-dom'
+import { PortableWifiOff } from '@mui/icons-material'
 
 const ProblemDetail = () => {
+const[problem,setProblem] = useState({});
+  const {slug} = useParams();
+useEffect(()=>{
+fetchData();
+},[])
+  const fetchData = async ()=>{
+    try{
+      const res = await apiClient.get(apiRouters.getProblemByProblemSetId(slug));
+      if (res.data) {
+        const updatedData = {
+          ...res.data,
+          test1: res.data.test1.replace(/\\n/g, '\n'),
+          test2: res.data.test2.replace(/\\n/g, '\n')
+        };
+        console.log(updatedData);
+        setProblem(updatedData);
+      }
+      
+    }catch(E){
+      console.log(E);
+    }
+  }
+
   return (
     <div>
       <section className='problemDetail_section'>
@@ -40,36 +40,48 @@ const ProblemDetail = () => {
           <div className='problemDetail_inner row'>
             {/* Left Side */}
             <div className='col-md-6 pd_leftSide'>
-              <h2 className='problem-title'>Problem: Add Two Numbers</h2>
+              <h2 className='problem-title'>{problem?.problemTitle}</h2>
               <p className='problem-description'>
-                Given two numbers, return their sum. You may assume that the numbers
-                are non-negative integers.
+                {problem?.problemDescription}
               </p>
-
               <div className='test-case'>
                 <h5>Test Case 1:</h5>
                 <pre className='test-case-input'>
-                  Input: {`(2, 3)`}
+                  Input: {problem.test1}
                 </pre>
                 <p className='expected-output'>
-                  Expected Output: 5
+                  Expected Output: {problem.output1}
                 </p>
               </div>
 
               <div className='test-case'>
                 <h5>Test Case 2:</h5>
                 <pre className='test-case-input'>
-                  Input: {`(5, 7)`}
+                  Input: {problem.test2}
                 </pre>
                 <p className='expected-output'>
-                  Expected Output: 12
+                  Expected Output: {problem.output2}
                 </p>
               </div>
             </div>
 
+            
+
             {/* Right Side - Code Editor */}
             <div className='col-md-6 pd_rightside'>
-              <CodeEditor />
+            <CodeEditor
+  testCases={[
+    {
+      input: problem.test1,
+      expected: problem.output1
+    },
+    {
+      input: problem.test2,
+      expected: problem.output2
+    }
+  ]}
+/>
+
             </div>
           </div>
         </div>
