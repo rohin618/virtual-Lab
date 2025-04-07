@@ -48,7 +48,7 @@ const AdminProblemTopicsList = () => {
     try {
       await apiClient.post(apiRouters.addProblemTopic, {
         ...formData,
-        course:slug,
+        courseId:slug,
       });
       toast.success('Problem topic added');
       setShowModal(false);

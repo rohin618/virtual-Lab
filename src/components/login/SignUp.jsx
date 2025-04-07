@@ -107,7 +107,7 @@
 // };
 
 // export default SignUp;
-
+ 
 
 
 import React, { useState } from "react";
@@ -115,7 +115,7 @@ import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../api/apiClients";
 import { apiRouters } from "../api/apiRouters";
 import { toast } from "react-toastify";
-
+  
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
