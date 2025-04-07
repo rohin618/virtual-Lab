@@ -29,7 +29,6 @@ const AdminProblemTopicsList = () => {
       } else {
         setTopics([]);
       }
-      toast.success('Topics loaded successfully');
     } catch (error) {
       console.error('Error fetching topics:', error);
       toast.error('Failed to load topics');

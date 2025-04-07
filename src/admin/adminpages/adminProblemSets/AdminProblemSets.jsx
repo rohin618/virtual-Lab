@@ -23,8 +23,6 @@ const AdminProblemSets = () => {
       const response = await apiClient.get(apiRouters.getProblemSets(slug));
       const sets = Array.isArray(response.data) ? response.data : [response.data];
       setProblemSets(sets);
-      console.log(response.data)
-      toast.success('Problem sets loaded');
     } catch (error) {
       console.error('Error fetching problem sets:', error);
       toast.error('Failed to load problem sets');
