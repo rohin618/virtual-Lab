@@ -97,3 +97,11 @@ footer ul li:hover {
     display: none;
   }
 }
+
+
+.margin-adjust{
+  margin-top: 100px;
+}
+.admin-head{
+  font-weight: 700;
+}

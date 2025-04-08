@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -15,7 +15,6 @@ import {
   ListItem,
   ListItemText,
   Collapse,
-  Paper,
   useMediaQuery,
   useTheme
 } from '@mui/material';
@@ -48,6 +47,10 @@ const Header = () => {
       };
 
       const {Auth,logout} = useAuthContext();
+
+
+
+
   return (
     <div>
       
@@ -55,8 +58,8 @@ const Header = () => {
         position="fixed" 
         elevation={0} 
         sx={{ 
-          backgroundColor: scrolled 
-            ? darkMode ? 'rgba(10, 14, 23, 0.8)' : 'rgba(255, 255, 255, 0.8)' 
+          backgroundColor: true 
+            ? true ? 'rgba(10, 14, 23, 0.8)' : 'rgba(255, 255, 255, 0.8)' 
             : 'transparent',
           backdropFilter: scrolled ? 'blur(10px)' : 'none',
           borderBottom: scrolled 

@@ -1,93 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios"; // Ensure axios is imported
-// import apiClient from "../../../components/api/apiClients";
-// import { apiRouters } from "../../../components/api/apiRouters";
-
-// const CourseListPage = () => {
-//     const [courses, setCourses] = useState([]);
-//     const navigate = useNavigate();
-
-//     useEffect(() => {
-//         fetchCourses();
-//     }, []);
-
-//     const fetchCourses = async () => {
-//         try {
-//             const token = localStorage.getItem("Auth_token");
-//             const response = await apiClient.get(apiRouters.getAllCourse);
-//             setCourses(response.data);
-//             console.log(response.data)
-//         } catch (error) {
-//             console.error("Error fetching courses:", error);
-//         }
-//     };
-
-//     const handleEdit = (id) => {
-//         navigate(`/coursePageAdminEdit/${id}`);
-//     };
-
-//     const handleDelete = async (id) => {
-//         if (window.confirm("Are you sure you want to delete this course?")) {
-//             try {
-
-//                 const res = await apiClient.delete(`${apiRouters.getAllCourse}/${id}`);
-//                 setCourses(courses.filter((course) => course.id !== id));
-//             } catch (error) {
-//                 console.error("Error deleting course:", error);
-//             }
-//         }
-//     };
-
-//     return (
-//         <div className="container mt-4">
-//             <h2 className="mb-4">Course List</h2>
-//             <table className="table table-striped table-bordered">
-//                 <thead className="thead-dark">
-//                     <tr>
-//                         <th>ID</th>
-//                         <th>Course Name</th>
-//                         <th>Description</th>
-//                         <th>Numbers</th>
-//                         <th>Difficulty</th>
-//                         <th>Actions</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     {courses.map((course) => (
-//                         <tr key={course.id}>
-//                             <td>{course.id}</td>
-//                             <td>{course.courseName}</td>
-//                             <td>{course.courseDescription}</td>
-//                             <td>{course.courseNumbers}</td>
-//                             <td>{course.difficulties}</td>
-//                             <td>
-//                                 <button
-//                                     className="btn btn-primary me-2"
-//                                     onClick={() => handleEdit(course.id)}
-//                                 >
-//                                     Edit
-//                                 </button>
-//                                 <button
-//                                     className="btn btn-danger"
-//                                     onClick={() => handleDelete(course.id)}
-//                                 >
-//                                     Delete
-//                                 </button>
-//                             </td>
-//                         </tr>
-//                     ))}
-//                 </tbody>
-//             </table>
-//         </div>
-//     );
-// };
-
-// export default CourseListPage;
-
-
-
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../components/api/apiClients";
@@ -160,9 +70,9 @@ const CourseListPage = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container margin-adjust">
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2>Course List</h2>
+                <h2 className="admin-head">Course List</h2>
                 <button className="btn btn-success" onClick={() => setShowModal(true)}>
                     Add Course
                 </button>
@@ -194,8 +104,8 @@ const CourseListPage = () => {
                                 <button className="btn btn-danger" onClick={() => handleDelete(course.id)}>
                                     Delete
                                 </button>
-                                <button className="btn btn-warning ms-2" onClick={() =>{ navigate(`/courseAdminProblemTopicsList/${course.id}`)}}>
-                                    view
+                                <button className="btn btn-warning ms-2" onClick={() => navigate(`/courseAdminProblemTopicsList/${course.id}`)}>
+                                    View
                                 </button>
                             </td>
                         </tr>
@@ -205,8 +115,24 @@ const CourseListPage = () => {
 
             {/* Modal */}
             {showModal && (
-                <div className="modal show fade d-block" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
+                <div
+                    className="modal show fade d-block"
+                    tabIndex="-1"
+                    role="dialog"
+                    style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        zIndex: 1055,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
                             <form onSubmit={handleAddCourseSubmit}>
                                 <div className="modal-header">
@@ -280,7 +206,6 @@ const CourseListPage = () => {
                             </form>
                         </div>
                     </div>
-                    <div className="fade show"></div>
                 </div>
             )}
         </div>

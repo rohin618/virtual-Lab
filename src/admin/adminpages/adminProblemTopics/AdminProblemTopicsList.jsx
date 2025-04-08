@@ -22,16 +22,13 @@ const AdminProblemTopicsList = () => {
     try {
       const response = await apiClient.get(apiRouters.getProblemTopicsByCourseId(slug));
       if (response.data) {
-        const topics = Array.isArray(response.data)
-          ? response.data
-          : [response.data];
+        const topics = Array.isArray(response.data) ? response.data : [response.data];
         setTopics(topics);
       } else {
         setTopics([]);
       }
     } catch (error) {
       console.error('Error fetching topics:', error);
-      toast.error('Failed to load topics');
     }
   };
 
@@ -47,7 +44,7 @@ const AdminProblemTopicsList = () => {
     try {
       await apiClient.post(apiRouters.addProblemTopic, {
         ...formData,
-        courseId:slug,
+        courseId: slug,
       });
       toast.success('Problem topic added');
       setShowModal(false);
@@ -60,8 +57,8 @@ const AdminProblemTopicsList = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="d-flex justify-content-between align-items-center mb-3">
+    <div style={{ padding: '20px' }} className='margin-adjust'>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h2>Problem Topics</h2>
         <button className="btn btn-success" onClick={() => setShowModal(true)}>
           Add Problem Topic
@@ -110,56 +107,79 @@ const AdminProblemTopicsList = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="modal show fade d-block" tabIndex="-1">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Problem Topic</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setShowModal(false)}
-                ></button>
+        <>
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 1050
+            }}
+          ></div>
+
+          <div
+            style={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 1060,
+              backgroundColor: '#fff',
+              borderRadius: '8px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+              width: '500px',
+              maxWidth: '90%'
+            }}
+          >
+            <div style={{ padding: '20px', borderBottom: '1px solid #dee2e6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h5 className="modal-title">Add Problem Topic</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setShowModal(false)}
+              ></button>
+            </div>
+            <div style={{ padding: '20px' }}>
+              <div className="mb-3">
+                <label className="form-label">Course Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="courseTitle"
+                  value={formData.courseTitle}
+                  onChange={(e) =>
+                    setFormData({ ...formData, courseTitle: e.target.value })
+                  }
+                />
               </div>
-              <div className="modal-body">
-                <div className="mb-3">
-                  <label className="form-label">Course Title</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="courseTitle"
-                    value={formData.courseTitle}
-                    onChange={(e) =>
-                      setFormData({ ...formData, courseTitle: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Course Description</label>
-                  <textarea
-                    className="form-control"
-                    name="courseDescription"
-                    value={formData.courseDescription}
-                    onChange={(e) =>
-                      setFormData({ ...formData, courseDescription: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setShowModal(false)}
-                >
-                  Cancel
-                </button>
-                <button className="btn btn-primary" onClick={handleAddTopic}>
-                  Save
-                </button>
+              <div className="mb-3">
+                <label className="form-label">Course Description</label>
+                <textarea
+                  className="form-control"
+                  name="courseDescription"
+                  value={formData.courseDescription}
+                  onChange={(e) =>
+                    setFormData({ ...formData, courseDescription: e.target.value })
+                  }
+                />
               </div>
             </div>
+            <div style={{ padding: '20px', borderTop: '1px solid #dee2e6', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-primary" onClick={handleAddTopic}>
+                Save
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

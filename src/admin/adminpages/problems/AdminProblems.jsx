@@ -105,8 +105,8 @@ const AdminProblems = () => {
   );
 
   return (
-    <div className="container mt-4">
-      <h2 className="mb-3">Problem Details</h2>
+    <div className="container margin-adjust mb-5">
+      <h2 className="mb-3 admin-head">Problem Details</h2>
 
       {problem ? (
         <form>
@@ -126,32 +126,49 @@ const AdminProblems = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="modal show d-block" tabIndex="-1" role="dialog">
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Problem</h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setShowModal(false)}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <form>{renderFormFields()}</form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
-                  Cancel
-                </button>
-                <button type="button" className="btn btn-primary" onClick={handleSubmit}>
-                  Add Problem
-                </button>
-              </div>
-            </div>
+  <>
+    {/* Backdrop */}
+    <div className="modal-backdrop fade show"></div>
+
+    {/* Modal */}
+    <div
+      className="modal show d-block"
+      tabIndex="-1"
+      role="dialog"
+      style={{
+        zIndex: 10055,
+      }}
+    >
+      <div
+        className="modal-dialog modal-dialog-centered"
+        role="document"
+      >
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Add Problem</h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => setShowModal(false)}
+            ></button>
+          </div>
+          <div className="modal-body">
+            <form>{renderFormFields()}</form>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
+              Cancel
+            </button>
+            <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+              Add Problem
+            </button>
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  </>
+)}
+
     </div>
   );
 };
