@@ -177,6 +177,8 @@ const HomePage = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+
+  const [bg,setBg] = useState(false); 
   
   // Handle scroll events
   useEffect(() => {

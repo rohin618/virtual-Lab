@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation  } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -14,11 +14,19 @@ import ErrorPage from './components/errorPage/ErrorPage';
 
 
 function App() {
+
+  const location = useLocation();
+  const isRoot = location.pathname === '/';
+
+
+
   return (
-    <BrowserRouter>
+
       
      
-        <Header />
+       <>
+       <div  style={{ backgroundColor: isRoot ? '#0a0e17' : 'initial' }}>
+       <Header />
         <div className='container'>
         <Routes>
 
@@ -45,10 +53,12 @@ function App() {
         </div>
         <Footer />
         <ToastContainer />
+       </div>
+       </>
 
      
 
-    </BrowserRouter>
+
   );
 }
 
