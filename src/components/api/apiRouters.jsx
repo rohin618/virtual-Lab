@@ -28,4 +28,11 @@ export const apiRouters = {
 
 
 
+
+    // enroll the course api
+    enrollConfirm:(courseId)=>`/api/userEnroll/${courseId}`,
+    fetchAllCourse:'/api/userEnroll',
+
+
+
 }

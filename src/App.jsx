@@ -9,6 +9,9 @@ import Footer from './components/footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import RouteProtected from './context/RouteProtected';
 import ErrorPage from './components/errorPage/ErrorPage';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchCourses } from './redux/slice/CourseSlice';
 
 
 
@@ -17,7 +20,11 @@ function App() {
 
   const location = useLocation();
   const isRoot = location.pathname === '/';
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchCourses()); 
+  }, [dispatch]);
 
 
   return (

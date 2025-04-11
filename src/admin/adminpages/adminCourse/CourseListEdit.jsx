@@ -41,8 +41,8 @@ const CourseListEdit = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Edit Course</h2>
+    <div className="container mb-5 margin-adjust">
+      <h2 className="admin-head">Edit Course</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Course Name</label>

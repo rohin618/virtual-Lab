@@ -3,20 +3,45 @@ import './courseDescription.css'
 import { Link, useParams } from 'react-router-dom';
 import apiClient from '../../components/api/apiClients';
 import { apiRouters } from '../../components/api/apiRouters';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const CourseDescription = () => {
     const courseTitle = "Mastering Data Structures and Algorithms";
     const courseDescription = "This course will teach you the core concepts of data structures and algorithms, helping you solve complex problems in computer science, including Arrays, Linked Lists, Trees, Graphs, and more.";
     const [problemTopic,setProblemTopic] = useState([]);
     const [problemTopicOvr,setProblemTopicOvt] = useState([]);
+    const [enrollModel,setEnrollModel] = useState(false);
+    const [view,setView] = useState(false);
+
+    const coursesListIds = useSelector((state) => state.courses.courses);
+    const status = useSelector((state) => state.courses.status);
 
     const {slug} = useParams();
 
+  
+
     useEffect(()=>{
         fetchData();
-        fetchProblemOverview();
     },[])
+
+
+    useEffect(()=>{
+        checkEnrollments();
+    },[coursesListIds,slug])
+
+
+    const checkEnrollments = ()=>{
+        coursesListIds.map((obj)=>{
+            if(obj.courseId == slug){
+                setView(true);
+            }
+        })
+    }
+
+
     const fetchData = async ()=>{
+        if(slug == undefined || null) return;
         try{
             const res = await apiClient.get(apiRouters.getProblemTopicsByCourseId(slug));
             if(res.data){
@@ -30,6 +55,7 @@ const CourseDescription = () => {
     }
 
     const fetchProblemOverview = async (id)=>{
+        if(id == undefined && id == null) return;
         try{
             const res = await apiClient.get(apiRouters.getTopicOverviewBySlug(id));
             if(res.data){
@@ -39,16 +65,19 @@ const CourseDescription = () => {
             console.log(e);
         }
     }
-    const topics = [
-        { name: "Introduction to Arrays", description: "Learn about arrays, one of the most fundamental data structures.", number: 1 },
-        { name: "Linked Lists", description: "Understand linked lists and their variations like singly and doubly linked lists.", number: 2 },
-        { name: "Stacks and Queues", description: "Learn about stack and queue operations and their practical applications.", number: 3 },
-        { name: "Trees", description: "Dive into tree structures like binary trees, BSTs, and tree traversals.", number: 4 },
-        { name: "Graphs", description: "Explore graphs and their algorithms like BFS, DFS, and shortest path algorithms.", number: 5 },
-        { name: "Hashing", description: "Learn about hash tables and how hashing is used to solve common problems.", number: 6 },
-        { name: "Sorting Algorithms", description: "Understand and implement sorting algorithms like quicksort, mergesort, and bubblesort.", number: 7 },
-        { name: "Dynamic Programming", description: "Learn the principles of dynamic programming and how to solve optimization problems.", number: 8 }
-    ];
+
+    const handleConfirm = async ()=>{
+        try{
+            const res = apiClient.post(apiRouters.enrollConfirm(slug));
+            if(res){
+                toast.success("You Successfully Enrolled this Course");
+                setEnrollModel(false);
+                setView(true);
+            }
+        }catch(e){
+            toast.error("Error to Enrolled this course");
+        }
+    }
 
     return (
         <div className="container mt-5">
@@ -56,11 +85,13 @@ const CourseDescription = () => {
                 <h1>{problemTopic.courseTitle}</h1>
                 <p>{problemTopic.courseDescription}</p>
                 <div className='text-center py-2'>
-                    <Link to={`/problemSets/${problemTopic.id}`}>
+                    {view ? <Link to={`/problemSets/${problemTopic.id}`}>
                         <button className='btn btn-primary'>
-                            Enroll to Problems
+                            view  Problems
                         </button>
-                    </Link>
+                    </Link> : <button className='btn btn-primary' onClick={()=>setEnrollModel(true)}>
+                            Enroll this Course
+                        </button>}
                 </div>
             </div>
             <div className="topics-list">
@@ -77,11 +108,30 @@ const CourseDescription = () => {
                 ))}
             </div>
 
-            <div className='text-center py-5'>
-                <button className='btn btn-primary'>
-                    Enroll to Problems
-                </button>
-            </div>
+
+            {
+                enrollModel && <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content p-4 text-center shadow rounded-4">
+                    <div className="modal-body">
+                      <h5 className="mb-4">Are you confirm to Enroll this Course</h5>
+                      
+                      <div className="d-flex justify-content-center gap-3">
+                        <button type="button" className="btn btn-primary px-4" onClick={handleConfirm}>
+                          Confirm
+                        </button>
+                        <button type="button" className="btn btn-outline-secondary px-4" onClick={()=>{setEnrollModel(false)}}>
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            }
+
+
         </div>
     );
 }
