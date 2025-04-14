@@ -6,20 +6,38 @@ import { apiRouters } from '../../components/api/apiRouters';
 
 const Course = () => {
 
-    const {slug} = useParams();
-    const [course,setCourse] = useState([]);
+    const { slug } = useParams();
+    const [course, setCourse] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchData();
-    },[])
-    const fetchData = async ()=>{
-        try{
+    }, [])
+    const fetchData = async () => {
+        try {
             const res = await apiClient.get(apiRouters.getProblemSets(slug));
-            setCourse(res.data);
-        }catch(e){
-            console.log(e);
+
+            if (res.data) {
+                const updatedSets = await Promise.all(
+                    res.data.map(async (item) => {
+                        try {
+                            const resOvr = await apiClient.get(`/api/problemStatus/${item.id}`);
+                            return { ...item, status: resOvr.data.status || "solve" };
+                        } catch (error) {
+                            if (error.response && error.response.status === 404) {
+                                return { ...item, status: "solve" };
+                            }
+                            return { ...item, status: "error" };
+                        }
+                    })
+                );
+                console.log(updatedSets)
+                setCourse(updatedSets);
+            }
+        } catch (e) {
+            console.log("Error fetching data:", e);
         }
-    }
+    };
+
 
 
     const problems = [
@@ -46,7 +64,7 @@ const Course = () => {
             <div className="heading-section text-center">
                 <h1 className="course-title mb-4">Data Structures: Tree</h1>
                 <p className="course-description">
-                    Learn essential concepts and techniques in tree data structures, including binary trees, traversals, and more. 
+                    Learn essential concepts and techniques in tree data structures, including binary trees, traversals, and more.
                     Gain hands-on experience with solving problems in tree-related algorithms.
                 </p>
             </div>
@@ -66,8 +84,24 @@ const Course = () => {
                                 </span>
                             </div>
                             <Link to={`/problem/${problem.id}`}>
-                                <button className="btn btn-primary btn-sm">Try to Solve</button>
+                                <button
+                                    className={`btn btn-sm ${problem.status === 'complete'
+                                            ? 'btn-success'
+                                            : problem.status === 'Attempt'
+                                                ? 'btn-warning'
+                                                : 'btn-primary'
+                                        }`}
+                                >
+                                    {problem.status === 'solve'
+                                        ? 'Try to Solve'
+                                        : problem.status === 'complete'
+                                            ? 'Solved'
+                                            : 'Attempt'}
+                                </button>
+
+
                             </Link>
+
                         </div>
                     ))}
                 </div>

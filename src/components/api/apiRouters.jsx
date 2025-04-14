@@ -1,7 +1,10 @@
 export const apiRouters = {
     signIn:'/api/auth/signUp',
     login:'/api/auth/login',
-    codeExecute:'/api/code/run',
+
+    // code execution
+    codeExecute:(id,problemOverviewId)=>`/api/code/run/${id}/${problemOverviewId}`,
+    getPageDetail:(id)=>`/api/code/${id}`,
 
     // course crud
     getAllCourse:'/api/courses',

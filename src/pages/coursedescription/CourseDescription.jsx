@@ -19,7 +19,6 @@ const CourseDescription = () => {
 
     const {slug} = useParams();
 
-  
 
     useEffect(()=>{
         fetchData();
@@ -28,7 +27,7 @@ const CourseDescription = () => {
 
     useEffect(()=>{
         checkEnrollments();
-    },[coursesListIds,slug])
+    },[coursesListIds,slug,status])
 
 
     const checkEnrollments = ()=>{

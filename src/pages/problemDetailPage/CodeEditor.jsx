@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { apiRouters } from "../../components/api/apiRouters";
+import React, { useEffect, useState } from "react";
 import apiClient from "../../components/api/apiClients";
+import { apiRouters } from "../../components/api/apiRouters";
 
-const CodeEditor = ({ testCases = [] }) => {
-  const [code, setCode] = useState();
+const CodeEditor = ({ testCases = [], problemId,problemOverviewId }) => {
+  const [code, setCode] = useState("");
   const [outputResults, setOutputResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -12,49 +11,48 @@ const CodeEditor = ({ testCases = [] }) => {
     setCode(event.target.value);
   };
 
+  const [pageDetail,setPageDetail] = useState({});
+  useEffect(()=>{
+   if(problemId != 0){
+    fetchPageDetail();
+   }
+  },[problemId])
+
+  const fetchPageDetail = async ()=>{
+    try{
+      const response = await apiClient.get(apiRouters.getPageDetail(problemId));
+      if(response.status === 200){
+        setPageDetail(response.data);
+        setCode(response.data.currentCode);
+      }
+    }catch(e){
+      console.log(e)
+    }
+  }
 
   const runCode = async () => {
     setLoading(true);
-    const results = [];
 
-    for (let i = 0; i < testCases.length; i++) {
-      const test = testCases[i];
-      console.log(test)
+    try {
+      const res = await apiClient.post(apiRouters.codeExecute(problemId,problemOverviewId), {
+        script: code,
+        language: "python3",
+        versionIndex: "3",
+        testCases: testCases ,
+      });
 
-      try {
-        const res = await apiClient.post(apiRouters.codeExecute, {
-          script: code,
-          stdin: test.input,
-          language: "python3",
-          versionIndex: "3"
-        });
-
-        console.log("Backend Response:", res.data); 
-
-        const output = res.data.output?.trim?.() || "";
-        const expected = test.expected?.trim?.() || "";
-        const passed = output === expected;
-
-        results.push({
-          input: test.input,
-          expected: test.expected,
-          output,
-          passed,
-        });
-      } catch (err) {
-        console.error("Execution Error:", err?.response?.data || err.message);
-
-        results.push({
-          input: test.input,
-          expected: test.expected,
-          output: err?.response?.data || "Error running code",
-          passed: false,
-        });
-      }
+      setOutputResults(res.data);
+    } catch (error) {
+      console.error("Execution Error:", error?.response?.data || error.message);
+      setOutputResults([{
+        input: "",
+        expected: "",
+        output: "Error running code",
+        passed: false,
+      }]);
+    } finally {
+      setLoading(false);
     }
-
-    setOutputResults(results);
-    setLoading(false);
   };
 
   return (
@@ -77,7 +75,7 @@ const CodeEditor = ({ testCases = [] }) => {
         }}
       />
 
-      <button onClick={runCode} className="btn btn-success mt-2">
+      <button onClick={runCode} className="btn btn-success mt-2" disabled={loading}>
         {loading ? "Running..." : "Run Code"}
       </button>
 

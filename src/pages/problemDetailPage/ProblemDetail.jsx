@@ -11,6 +11,7 @@ import { PortableWifiOff } from '@mui/icons-material'
 
 const ProblemDetail = () => {
 const[problem,setProblem] = useState({});
+const[problemId,setProblemId] = useState(0);
   const {slug} = useParams();
 useEffect(()=>{
 fetchData();
@@ -26,6 +27,7 @@ fetchData();
         };
         console.log(updatedData);
         setProblem(updatedData);
+        setProblemId(res.data.id);
       }
       
     }catch(E){
@@ -80,6 +82,8 @@ fetchData();
       expected: problem.output2
     }
   ]}
+  problemId={problemId}
+  problemOverviewId={slug}
 />
 
             </div>
